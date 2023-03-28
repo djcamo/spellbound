@@ -1,0 +1,126 @@
+<section class="g-bg-gray-light-v5 g-py-50">
+  <div class="container">
+    <div class="d-sm-flex text-center">
+      <div class="align-self-center">
+        <h2 class="h2 g-font-weight-300 w-100 g-mb-10 g-mb-0--md">Shop</h2>
+      </div>
+      <div class="align-self-center ml-auto">
+        <ul class="u-list-inline">
+          <li class="list-inline-item g-mr-5">
+            <a class="u-link-v5 g-color-main g-color-primary--hover" href="/">Home</a>
+            <i class="g-color-gray-light-v2 g-ml-5">/</i>
+          </li>
+          <li class="list-inline-item g-color-primary">
+            <span>Shop</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="container g-my-50">
+  <!-- Team Block -->
+  <div class="row" id="categories">
+
+    <!-- <div class="col-lg-3 col-sm-6 g-mb-30">
+      <div class="u-info-v6-1">
+        <figure class="u-block-hover">
+          <img class="w-100" src="assets/img/catalogs/tools.jpg" alt="Image Description">
+        </figure>
+        <div class="g-bg-white g-pa-25">
+          <div class="g-mb-15">
+            <h4 class="h5 g-color-black g-mb-5">Altar Tools</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6 g-mb-30">
+      <div class="u-info-v6-1">
+        <figure class="u-block-hover">
+          <img class="w-100" src="assets/img/products/essential-oils.jpg" alt="Image Description">
+        </figure>
+        <div class="g-bg-white g-pa-25">
+          <div class="g-mb-15">
+            <h4 class="h5 g-color-black g-mb-5">Aromatherapy</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6 g-mb-30">
+      <div class="u-info-v6-1">
+        <figure class="u-block-hover">
+          <img class="w-100" src="assets/img/catalogs/books-cds.jpg" alt="Image Description">
+        </figure>
+        <div class="g-bg-white g-pa-25">
+          <div class="g-mb-15">
+            <h4 class="h5 g-color-black g-mb-5">Books</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6 g-mb-30">
+      <div class="u-info-v6-1">
+        <figure class="u-block-hover">
+          <img class="w-100" src="assets/img/catalogs/childrens.jpg" alt="Image Description">
+        </figure>
+        <div class="g-bg-white g-pa-25">
+          <div class="g-mb-15">
+            <h4 class="h5 g-color-black g-mb-5">Children</h4>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+
+
+  </div>
+  <!-- End Team Block -->
+</section>
+
+<script>
+  jQuery(document).ready(function () {
+    html = ``;
+    getCategories()
+      .then(data => {
+        data.forEach(element => {
+          html += `
+          <div class="col-lg-3 col-sm-6 g-mb-30">
+            <div class="u-info-v6-1">
+              <a href="${element['url']}">
+                <figure class="u-block-hover product">
+                  <img class="w-100" src="assets/img/catalogs/${element['category_image']}" alt="${element['category_description']}">
+                </figure>
+                <div class="g-bg-white g-pa-25">
+                  <div class="g-mb-15">
+                    <h4 class="h5 g-color-black g-mb-5">${element['category_name']}</h4>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          `
+        });
+        jQuery('#categories').append(html);
+      });
+  })
+
+  const getCategories = async () => {
+    const res = await fetch('inc/get_categories.php',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+      });
+    const data = await res.json();
+    return data;
+  }
+</script>

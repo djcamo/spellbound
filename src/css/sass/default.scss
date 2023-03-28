@@ -1,0 +1,25 @@
+@font-face{font-family:'QlassikMediumRegular';src:url('fonts/qlassik_tb-webfont.eot');src:url('fonts/qlassik_tb-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/qlassik_tb-webfont.woff2') format('woff2'), url('fonts/qlassik_tb-webfont.woff') format('woff'), url('fonts/qlassik_tb-webfont.ttf') format('truetype'), url('fonts/qlassik_tb-webfont.svg#qlassik_mediumregular') format('svg');font-weight:400;font-style:normal;}
+/* default settings */
+$primary-color: #81AE04;
+$secondary-color: #2366ea;
+$success-color: #81AE04;
+$warning-color: orange;
+$danger-color: red;
+$text-color: #666666;
+$default-font: 'QlassikMediumRegular', sans-serif;
+$heading-font: 'QlassikMediumRegular', sans-serif;
+$default-font-size: 16px;
+$heading1-size: 32px;
+
+/* normal styles */
+body{font-family:$default-font; font-size: $default-font-size;color:$text-color}
+a{color:$primary-color;text-decoration: none}
+a:hover{color:darken($primary-color, 10%);text-decoration: none}
+h1,h2,h3,h4,h5{font-family:$heading-font;font-weight:500}
+h1{font-size:$heading1-size;color:$primary-color}
+h2{font-size:$heading1-size*0.8}
+h3{font-size:$heading1-size*0.7}
+h4{font-size:$heading1-size*0.6}
+h5{font-size:$heading1-size*0.5}
+
+@import 'custom';
