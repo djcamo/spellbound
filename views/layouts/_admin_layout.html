@@ -47,21 +47,21 @@
                             <form action="" id="productForm" method="POST">
                                 <div class="form-group">
                                     <label for="productName">Name</label>
-                                    <input type="email" class="form-control" id="productName"
+                                    <input type="email" class="form-control" id="productName" name="productName"
                                         aria-describedby="productName" placeholder="Enter product name">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Description</label>
-                                    <textarea name="" id="productDescription"></textarea>
+                                    <textarea name="" id="productDescription" name="productDescription"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="productPrice">Price</label>
-                                    <input type="email" class="form-control" id="productPrice"
+                                    <input type="email" class="form-control" id="productPrice" name="productPrice"
                                         aria-describedby="productPrice" placeholder="Enter product price">
                                 </div>
                                 <div class="form-group">
                                     <label for="productCategory">Category</label>
-                                    <select type="email" class="form-control" id="productCategory"
+                                    <select type="email" class="form-control" id="productCategory" name="productCategory"
                                         aria-describedby="productCategory"></select>
                                 </div>
                                 <div class="form-group">
@@ -72,11 +72,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="productActive">
+                                    <input type="checkbox" class="form-check-input" id="productActive" name="productActive">
                                     <label class="form-check-label" for="productActive">Active</label>
                                 </div>
                                 <div class="form-group border w-25">
-                                    <img src="" class="w-100 p-2" id="productImage">
+                                    <img src="" class="w-100 p-2" id="productImageSrc">
                                 </div>
                             </form>
                         </div>
@@ -186,16 +186,25 @@
 
             jQuery('#save').click(function(){
                 if(jQuery('.prod:visible').length == 1){
-                    jQuery('#productForm').submit(function(e){
-                        e.preventDefault();
-                        const data = jQuery('#productForm').serialize();
-                        console.log(data);
-                    });
+                    // let productName = jQuery('#productName').val();
+                    // let productDescription = jQuery('#productDescription').val();
+                    // let productPrice = jQuery('#productPrice').val();
+                    // let productCategory = jQuery('#productCategory').val();
+                    // let productActive = jQuery('#productActive').val();
+                    let data = jQuery('#productForm').serializeArray();
+                    let desc = editor.getData( data[0]['product_description'] );
+                    data.push({'name':'productDescription','value':desc});
+                    console.log(data);
                 }else{
                     alert('category');
                 }
             });
 
+        });
+
+        jQuery('').submit(function(e){
+            e.preventDefault();
+            const data = jQuery('#').serialize();
         });
 
         const showForm = (id, type, edit) => {
@@ -294,6 +303,19 @@
             return data;
         }
 
+        const updateItem = async () => {
+            const res = await fetch('',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            });
+            const data = await res.json();
+            return data;
+        }
+
         const editItem = (id,type) => {
             if(type == 'cat'){
                 jQuery('#categoryId').val(id);
@@ -327,7 +349,7 @@
                         jQuery('#productActive').prop("checked",false);
                     }
                     jQuery('#productPrice').val(data[0]['product_price']);
-                    jQuery('#productImage').attr('src','/assets/img/products/' + data[0]['product_image'])
+                    jQuery('#productImageSrc').attr('src','/assets/img/products/' + data[0]['product_image'])
                 });
             }
             showForm(id,type,true);
