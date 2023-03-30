@@ -82,10 +82,10 @@
                         </div>
                         <div class="cat" style="display:none">
                             <form action="" id="categoryForm" data-type="">
-                                <input type="hidden" id="categoryId">
+                                <input type="hidden" id="categoryId" name="categoryId">
                                 <div class="form-group">
                                     <label for="categoryName">Name</label>
-                                    <input type="email" class="form-control" id="categoryName"
+                                    <input type="email" class="form-control" id="categoryName" name="categoryName"
                                         aria-describedby="categoryName" placeholder="Enter category name">
                                 </div>
                                 <div class="form-group">
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="categoryActive">
+                                    <input type="checkbox" class="form-check-input" id="categoryActive" name="categoryActive"> 
                                     <label class="form-check-label" for="categoryActive">Active</label>
                                 </div>
                                 <div class="form-group border w-25">
@@ -186,11 +186,6 @@
 
             jQuery('#save').click(function(){
                 if(jQuery('.prod:visible').length == 1){
-                    // let productName = jQuery('#productName').val();
-                    // let productDescription = jQuery('#productDescription').val();
-                    // let productPrice = jQuery('#productPrice').val();
-                    // let productCategory = jQuery('#productCategory').val();
-                    // let productActive = jQuery('#productActive').val();
                     let data = jQuery('#productForm').serializeArray();
                     let desc = editor.getData( data[0]['product_description'] );
                     data.push({'name':'productDescription','value':desc});
@@ -200,16 +195,21 @@
                         jQuery('#products').DataTable().ajax.reload();
                     });
                 }else{
-                    alert('category');
+                    let data = jQuery('#categoryForm').serializeArray();
+                    let desc = editor.getData( data[0]['category_description'] );
+                    data.push({'name':'categoryDescription','value':desc});
+                    console.log(data);
+                    updateItem(data)
+                    .then(data => {
+                        jQuery('#form').modal('hide');
+                        jQuery('#categories').DataTable().ajax.reload();
+                    });
                 }
             });
 
         });
 
-        jQuery('').submit(function(e){
-            e.preventDefault();
-            const data = jQuery('#').serialize();
-        });
+    
 
         const showForm = (id, type, edit) => {
             if (type == 'cat') {
