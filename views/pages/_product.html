@@ -1,0 +1,169 @@
+<section class="g-bg-gray-light-v5 g-py-50">
+  <div class="container">
+    <div class="d-sm-flex text-center">
+      <div class="align-self-center">
+        <h2 class="h2 g-font-weight-300 w-100 g-mb-10 g-mb-0--md">Shop</h2>
+      </div>
+      <div class="align-self-center ml-auto">
+        <ul class="u-list-inline">
+          <li class="list-inline-item g-mr-5">
+            <a class="u-link-v5 g-color-main g-color-primary--hover" href="/">Home</a>
+            <i class="g-color-gray-light-v2 g-ml-5">/</i>
+          </li>
+          <li class="list-inline-item g-color-primary">
+            <span>Shop</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="container g-my-50">
+  <!-- Team Block -->
+  <div class="row" id="categories">
+
+    <!-- <div class="col-lg-3 col-sm-6 g-mb-30">
+      <div class="u-info-v6-1">
+        <figure class="u-block-hover">
+          <img class="w-100" src="assets/img/catalogs/tools.jpg" alt="Image Description">
+        </figure>
+        <div class="g-bg-white g-pa-25">
+          <div class="g-mb-15">
+            <h4 class="h5 g-color-black g-mb-5">Altar Tools</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6 g-mb-30">
+      <div class="u-info-v6-1">
+        <figure class="u-block-hover">
+          <img class="w-100" src="assets/img/products/essential-oils.jpg" alt="Image Description">
+        </figure>
+        <div class="g-bg-white g-pa-25">
+          <div class="g-mb-15">
+            <h4 class="h5 g-color-black g-mb-5">Aromatherapy</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6 g-mb-30">
+      <div class="u-info-v6-1">
+        <figure class="u-block-hover">
+          <img class="w-100" src="assets/img/catalogs/books-cds.jpg" alt="Image Description">
+        </figure>
+        <div class="g-bg-white g-pa-25">
+          <div class="g-mb-15">
+            <h4 class="h5 g-color-black g-mb-5">Books</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6 g-mb-30">
+      <div class="u-info-v6-1">
+        <figure class="u-block-hover">
+          <img class="w-100" src="assets/img/catalogs/childrens.jpg" alt="Image Description">
+        </figure>
+        <div class="g-bg-white g-pa-25">
+          <div class="g-mb-15">
+            <h4 class="h5 g-color-black g-mb-5">Children</h4>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+
+  </div>
+  <!-- End Team Block -->
+</section>
+
+<script>
+  jQuery(document).ready(function () {
+
+    var param = 'p',
+    slug = getUrlParameter(param);
+
+
+    html = ``;
+    getProduct(slug)
+      .then(data => {
+        data.forEach(element => {
+          html += `
+          <div class="container g-py-50">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div id="carouselCus1" class="js-carousel g-pt-10 g-mb-10 slick-initialized slick-slider">
+                        <div class="slick-list draggable">
+                            <div class="slick-track" style="opacity: 1; width: 1905px;">
+                                <div class="js-slide g-bg-cover g-bg-black-opacity-0_1--after slick-slide slick-current slick-active"
+                                    data-slick-index="0" aria-hidden="false" tabindex="0"
+                                    style="width: 635px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1; height: auto;">
+                                    <figure>
+                                    <img class="img-fluid w-100" src="../../assets/img/products/${element['product_image']}"
+                                        alt="Image Description">
+                                        </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="g-px-40--lg g-pt-70">
+                        <div class="g-mb-30">
+                            <h1 class="g-font-weight-300 mb-4">${element['product_name']}</h1>
+                            ${element['product_description']}
+                        </div>
+                        <div class="g-mb-30">
+                            <h2 class="g-color-gray-dark-v5 g-font-weight-400 g-font-size-12 text-uppercase mb-2">Price</h2>
+                            <span class="g-color-black g-font-weight-500 g-font-size-30 mr-2">${element['product_price']}</span>
+                        </div>
+
+                        <div class="row g-mx-minus-5 g-mb-20">
+                            <div class="col g-px-5 g-mb-10">
+                                <button class="btn btn-block u-btn-primary g-font-size-12 text-uppercase g-py-15 g-px-25"
+                                    type="button">
+                                    Place Order <i class="align-middle ml-2 icon-finance-100 u-line-icon-pro"></i>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+          `
+        });
+        jQuery('#categories').append(html);
+      });
+  })
+
+    const getProduct = async (slug) => {
+        const res = await fetch('../../inc/get_product.php',
+        {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({slug:slug})
+        });
+        const data = await res.json();
+        return data;
+    }
+
+
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>
