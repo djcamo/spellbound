@@ -43,8 +43,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="prod" style="display:none">
-                            <input type="hidden" id="productId">
                             <form action="" id="productForm" method="POST">
+                                <input type="hidden" id="productId" name="productId">
                                 <div class="form-group">
                                     <label for="productName">Name</label>
                                     <input type="email" class="form-control" id="productName" name="productName"
@@ -194,7 +194,11 @@
                     let data = jQuery('#productForm').serializeArray();
                     let desc = editor.getData( data[0]['product_description'] );
                     data.push({'name':'productDescription','value':desc});
-                    console.log(data);
+                    updateItem(data)
+                    .then(data => {
+                        jQuery('#form').modal('hide');
+                        jQuery('#products').DataTable().ajax.reload();
+                    });
                 }else{
                     alert('category');
                 }
@@ -303,14 +307,14 @@
             return data;
         }
 
-        const updateItem = async () => {
-            const res = await fetch('',
+        const updateItem = async (params) => {
+            const res = await fetch('/inc/updateItem.php',
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({})
+                body: JSON.stringify({params})
             });
             const data = await res.json();
             return data;
