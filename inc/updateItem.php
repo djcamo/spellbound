@@ -48,7 +48,7 @@ function updateCategory($params,$pdo){
         //new category
     } else {
         //update category
-        if ($params[4]['value'] == 'on') {
+        if ($params[2]['value'] == 'on') {
             $active = 1;
         } else {
             $active = 0;
@@ -56,7 +56,7 @@ function updateCategory($params,$pdo){
         $sql = 'UPDATE categories SET category_name = ?, category_description = ?, active = ? WHERE category_id = ?';
         $ref = $pdo->prepare($sql);
         try {
-            $ref->execute([$params[1]['value'],$params[5]['value'],$params[2]['value'],$active,$params[0]['value']]);
+            $ref->execute([$params[1]['value'],$params[3]['value'],$active,$params[0]['value']]);
             echo json_encode(0);
         } catch (PDOException $ex){
             echo $ex->getMessage();
