@@ -10,7 +10,7 @@ $opt = [
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
-$db = new MysqlPdo($dsn, "root", "root", $opt);
+$db = new MysqlPdo($dsn, "root", "", $opt);
 
 $pdo = $db->pdo;
 

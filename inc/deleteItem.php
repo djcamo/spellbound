@@ -12,11 +12,11 @@ if ($contentType === "application/json") {
 }
 
 switch ($type) {
-    case 'p':
+    case 'prod':
         $table = "products";
         $field = "product_id";
         break;
-    case 'c':
+    case 'cat':
         $table = "categories";
         $field = "category_id";
         break;

@@ -1,1 +1,11 @@
 // Add here all your customized variables
+
+.fa-2x{font-size:1.5em}
+figure img{
+    aspect-ratio: var(--aspect-ratio);
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+.best-seller{--aspect-ratio: 1 / 1;}
+.product{--aspect-ratio: 1 / 1;}
+.js-slide{--aspect-ratio: 1 / 1.1;}

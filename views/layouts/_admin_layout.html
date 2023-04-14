@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/assets/css/unify-admin.css">
     <!-- CSS Global Icons -->
     <link rel="stylesheet" href="/assets/vendor/icon-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/vendor/datatables/datatables.min.css">
+    <link href="https://cdn.datatables.net/v/bs4/dt-1.13.4/b-2.3.6/date-1.4.0/r-2.4.1/datatables.min.css" rel="stylesheet"/>
     <!-- CSS Customization -->
     <link rel="stylesheet" href="/assets/css/custom.css">
 </head>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="prod" style="display:none">
-                            <form action="" id="productForm" method="POST">
+                            <form action="" id="productForm" method="POST" >
                                 <input type="hidden" id="productId" name="productId">
                                 <div class="form-group">
                                     <label for="productName">Name</label>
@@ -67,7 +67,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Image</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile">
+                                        <input type="file" class="custom-file-input" name="productImage">
                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
                                 </div>
@@ -77,6 +77,7 @@
                                 </div>
                                 <div class="form-group border w-25">
                                     <img src="" class="w-100 p-2" id="productImageSrc">
+                                    <input type="hidden" name="productImageSrc" id="hiddenImage">
                                 </div>
                             </form>
                         </div>
@@ -100,7 +101,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="categoryActive" name="categoryActive"> 
+                                    <input type="checkbox" class="form-check-input" id="categoryActive" name="categoryActive">
                                     <label class="form-check-label" for="categoryActive">Active</label>
                                 </div>
                                 <div class="form-group border w-25">
@@ -125,7 +126,7 @@
     <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
     <script src="/assets/vendor/popper.js/popper.min.js"></script>
     <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
-    <script src="/assets/vendor/datatables/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.13.4/b-2.3.6/date-1.4.0/r-2.4.1/datatables.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 
 
@@ -136,6 +137,11 @@
     <script>
         let editor;
         jQuery(document).on('ready', function () {
+
+            const product_image = document.getElementsByName('productImage')[0];
+            product_image.addEventListener('change', () => {
+                upload_image(product_image.files[0]);
+            });
 
             jQuery('#categories').DataTable({
                 dom: '<"top"fB>t<"bottom"><"clear">',
@@ -209,7 +215,19 @@
 
         });
 
-    
+        const upload_image = (file) => {
+            const form_data = new FormData();
+            form_data.append('sample_image', file);
+            fetch("/inc/upload.php", {
+                method:"POST",
+                body : form_data
+            }).then(function(response){
+                return response.json();
+            }).then(function(responseData){
+                jQuery('#productImageSrc').attr('src','/assets/img/products/' + responseData.image_source);
+                jQuery('#hiddenImage').val(responseData.image_source)
+            });
+        }
 
         const showForm = (id, type, edit) => {
             if (type == 'cat') {
@@ -277,7 +295,7 @@
             delete_item(id, type)
             .then(data => {
                 switch (type) {
-                    case "c":
+                    case "cat":
                         jQuery('#categories').DataTable().ajax.reload();
                         break;
                     case "p":
@@ -353,7 +371,7 @@
                         jQuery('#productActive').prop("checked",false);
                     }
                     jQuery('#productPrice').val(data[0]['product_price']);
-                    jQuery('#productImageSrc').attr('src','/assets/img/products/' + data[0]['product_image'])
+                    jQuery('#productImageSrc').attr('src','/assets/img/products/' + data[0]['product_image']);
                 });
             }
             showForm(id,type,true);

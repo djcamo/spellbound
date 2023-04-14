@@ -26,7 +26,6 @@ $g-xl: 1200px !default; // Extra large devices (large desktops, >=1200)
 // If you want to use "max-width" than var-1. For exmaple: @media (max-width: #{$g-lg - 1}) {...}
 
 
-
 //
 // Colors
 //
@@ -36,7 +35,7 @@ $g-color-main: #555 !default;
 $g-bg-color-main: #fff !default;
 
 // Primary Color
-$g-color-primary: #6639b6 !default;
+$g-color-primary: #4d0f8a !default;
 $g-color-primary-dark-v1: darken($g-color-primary, 2%) !default;
 $g-color-primary-dark-v2: darken($g-color-primary, 5%) !default;
 $g-color-primary-dark-v3: darken($g-color-primary, 10%) !default;
@@ -44,7 +43,7 @@ $g-color-primary-light-v1: rgba($g-color-primary, .2) !default;
 $g-color-primary-light-v2: rgba($g-color-primary, .8) !default; // R
 
 // Secondary Color
-$g-color-secondary: #e74b3c !default;
+$g-color-secondary: #0F0F8A !default;
 $g-bg-color-secondary: #fafafa !default;
 
 // Color Black
@@ -71,7 +70,7 @@ $g-color-gray-dark-v5: #999 !default;
 // Status Colors
 
 // Color Success
-$g-color-success:             #5cb85c !default;
+$g-color-success:             #0F8A4D !default;
 $g-color-success-dark-v1:     darken($g-color-success, 2%) !default;
 $g-color-success-dark-v2:     darken($g-color-success, 5%) !default;
 
@@ -81,7 +80,7 @@ $g-color-info-dark-v1:        darken($g-color-info, 2%) !default;
 $g-color-info-dark-v2:        darken($g-color-info, 5%) !default;
 
 // Color Warning
-$g-color-warning:             #f0ad4e !default;
+$g-color-warning:             #8A4D0F !default;
 $g-color-warning-dark-v1:     darken($g-color-warning, 2%) !default;
 $g-color-warning-dark-v2:     darken($g-color-warning, 5%) !default;
 
@@ -121,10 +120,10 @@ $g-color-lightred: #e64b3b !default;
 $g-color-darkred: #a10f2b !default;
 
 // Color Purple
-$g-color-purple: #9a69cb !default;
+$g-color-purple: lighten($g-color-primary, 50%) !default;
 
 // Color Dark Purple
-$g-color-darkpurple: #6639b6 !default;
+$g-color-darkpurple: darken($g-color-primary, 10%) !default;
 $g-color-purple-dark-v1: darken($g-color-purple, 27%) !default;
 
 // Color Pink
