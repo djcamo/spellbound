@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Title -->
+    <title>Spellbound Admin Panel</title>
+    <!-- Required Meta Tags Always Come First -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- Google Fonts -->
+    <link rel="stylesheet"
+        href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
+    <!-- CSS Global Compulsory -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/unify-admin.css">
+    <!-- CSS Global Icons -->
+    <link rel="stylesheet" href="/assets/vendor/icon-awesome/css/font-awesome.min.css">
+    <link href="https://cdn.datatables.net/v/bs4/dt-1.13.4/b-2.3.6/date-1.4.0/r-2.4.1/datatables.min.css" rel="stylesheet"/>
+    <!-- CSS Customization -->
+    <link rel="stylesheet" href="/assets/css/custom.css">
+</head>
+
+<body>
+    [@header]
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-1 bg-dark text-white pt-4 u-sidebar-navigation-v1" style="height:100vh">[@menu]</div>
+            <div class="col pt-4">[@content]</div>
+        </div>
+
+
+        <div class="modal" tabindex="-1" role="dialog" id="form">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="prod" style="display:none">
+                            <form action="" id="productForm" method="POST" >
+                                <input type="hidden" id="productId" name="productId">
+                                <div class="form-group">
+                                    <label for="productName">Name</label>
+                                    <input type="email" class="form-control" id="productName" name="productName"
+                                        aria-describedby="productName" placeholder="Enter product name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Description</label>
+                                    <textarea name="" id="productDescription" name="productDescription"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productPrice">Price</label>
+                                    <input type="email" class="form-control" id="productPrice" name="productPrice"
+                                        aria-describedby="productPrice" placeholder="Enter product price">
+                                </div>
+                                <div class="form-group">
+                                    <label for="productCategory">Category</label>
+                                    <select type="email" class="form-control" id="productCategory" name="productCategory"
+                                        aria-describedby="productCategory"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="productImage">
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="productActive" name="productActive">
+                                    <label class="form-check-label" for="productActive">Active</label>
+                                </div>
+                                <div class="form-group border w-25">
+                                    <img src="" class="w-100 p-2" id="productImageSrc">
+                                    <input type="hidden" name="productImageSrc" id="hiddenImage">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="cat" style="display:none">
+                            <form action="" id="categoryForm" data-type="">
+                                <input type="hidden" id="categoryId" name="categoryId">
+                                <div class="form-group">
+                                    <label for="categoryName">Name</label>
+                                    <input type="email" class="form-control" id="categoryName" name="categoryName"
+                                        aria-describedby="categoryName" placeholder="Enter category name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Description</label>
+                                    <textarea name="" id="categoryDescription" ></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile">
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="categoryActive" name="categoryActive">
+                                    <label class="form-check-label" for="categoryActive">Active</label>
+                                </div>
+                                <div class="form-group border w-25">
+                                    <img src="" class="w-100 p-2" id="categoryImage">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="close">Close</button>
+                        <button type="button" class="btn btn-secondary" id="save">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- JS Global Compulsory -->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="/assets/vendor/popper.js/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.13.4/b-2.3.6/date-1.4.0/r-2.4.1/datatables.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+
+    <!-- JS Custom -->
+    <script src="/assets/js/custom.js"></script>
+
+    <!-- JS Plugins Init. -->
+    <script>
+        let editor;
+        jQuery(document).on('ready', function () {
+
+            const product_image = document.getElementsByName('productImage')[0];
+            product_image.addEventListener('change', () => {
+                upload_image(product_image.files[0]);
+            });
+
+            jQuery('#categories').DataTable({
+                dom: '<"top"fB>t<"bottom"><"clear">',
+                paging: false,
+                ordering: false,
+                info: false,
+                ajax: {
+                    url: "../inc/admin_categories.php",
+                    type: "POST"
+                },
+                "buttons": [
+                    {
+                        title: 'Add Category',
+                        text: '<i class="fa fa-plus fa-1x"></i> Add',
+                        titleAttr: 'Add Category',
+                        action: function (e, dt, node, config) {
+                            showForm('','cat', false);
+                        }
+
+                    }
+                ],
+            });
+
+            jQuery('#products').DataTable({
+                dom: '<"top"fB>t<"bottom"><"clear">',
+                paging: false,
+                ordering: false,
+                info: false,
+                ajax: {
+                    url: "../inc/admin_products.php",
+                    type: "POST"
+                },
+                "buttons": [
+                    {
+                        title: 'Add Product',
+                        text: '<i class="fa fa-plus fa-1x"></i> Add',
+                        titleAttr: 'Add Product',
+                        action: function (e, dt, node, config) {
+                            showForm('','prod', false);
+                        }
+                    }
+                ],
+            });
+
+            jQuery('#close').click(function(){
+                document.querySelector('.ck-editor__editable').ckeditorInstance.destroy();
+            });
+
+            jQuery('#save').click(function(){
+                if(jQuery('.prod:visible').length == 1){
+                    let data = jQuery('#productForm').serializeArray();
+                    let desc = editor.getData( data[0]['product_description'] );
+                    data.push({'name':'productDescription','value':desc});
+                    updateItem(data)
+                    .then(data => {
+                        jQuery('#form').modal('hide');
+                        jQuery('#products').DataTable().ajax.reload();
+                    });
+                }else{
+                    let data = jQuery('#categoryForm').serializeArray();
+                    let desc = editor.getData( data[0]['category_description'] );
+                    data.push({'name':'categoryDescription','value':desc});
+                    console.log(data);
+                    updateItem(data)
+                    .then(data => {
+                        jQuery('#form').modal('hide');
+                        jQuery('#categories').DataTable().ajax.reload();
+                    });
+                }
+            });
+
+        });
+
+        const upload_image = (file) => {
+            const form_data = new FormData();
+            form_data.append('sample_image', file);
+            fetch("/inc/upload.php", {
+                method:"POST",
+                body : form_data
+            }).then(function(response){
+                return response.json();
+            }).then(function(responseData){
+                jQuery('#productImageSrc').attr('src','/assets/img/products/' + responseData.image_source);
+                jQuery('#hiddenImage').val(responseData.image_source)
+            });
+        }
+
+        const showForm = (id, type, edit) => {
+            if (type == 'cat') {
+                ClassicEditor
+                .create( document.querySelector( '#categoryDescription' ) )
+                .then( newEditor => {
+                    editor = newEditor;
+                })
+                .catch( error => {
+                    console.error( error );
+                });
+                jQuery('.cat').show();
+                jQuery('.prod').hide();
+                if (edit == true) {
+                    jQuery('.modal-title').html("Edit Category");
+                } else {
+                    jQuery('.modal-title').html("Add Category");
+                }
+            } else if (type == 'prod') {
+                ClassicEditor
+                .create( document.querySelector( '#productDescription' ) )
+                .then( newEditor => {
+                    editor = newEditor;
+                })
+                .catch( error => {
+                    console.error( error );
+                });
+                jQuery('.prod').show();
+                jQuery('.cat').hide();
+                if (edit == true) {
+                    jQuery('.modal-title').html("Edit Product");
+                } else {
+                    jQuery('.modal-title').html("Add Product");
+                }
+            } else {
+
+            }
+            getCategoryList()
+            .then(data => {
+                let html = '';
+                data.forEach(element => {
+                    html = `<option value="${element['category_id']}">${element['category_name']}</option>`
+                    jQuery('#productCategory').append(html);
+                    html='';
+                });
+                jQuery('#form').modal('show');
+            });
+
+        }
+
+        const getCategoryList = async () => {
+            const res = await fetch('/inc/getCategoryList.php',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            });
+            const data = await res.json();
+            return data;
+        }
+
+        const deleteItem = (id, type) => {
+            delete_item(id, type)
+            .then(data => {
+                switch (type) {
+                    case "cat":
+                        jQuery('#categories').DataTable().ajax.reload();
+                        break;
+                    case "p":
+                        jQuery('#products').DataTable().ajax.reload();
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
+
+        const delete_item = async (id, type) => {
+            const res = await fetch('/inc/deleteItem.php',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(
+                        {
+                            id: id,
+                            type: type
+                        }
+                    )
+                });
+            const data = await res.json();
+            return data;
+        }
+
+        const updateItem = async (params) => {
+            const res = await fetch('/inc/updateItem.php',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({params})
+            });
+            const data = await res.json();
+            return data;
+        }
+
+        const editItem = (id,type) => {
+            if(type == 'cat'){
+                jQuery('#categoryId').val(id);
+                getItem(id,type)
+                .then(data => {
+                    jQuery('#categoryName').val(data[0]['category_name']);
+                    jQuery('#categoryDescription').val(data[0]['category_description']);
+                    editor.setData( data[0]['category_description'] );
+                    let active = data[0]['active'];
+                    if (active == 1) {
+                        jQuery('#categoryActive').prop("checked",true);
+                    } else {
+                        jQuery('#categoryActive').prop("checked",false);
+                    }
+                    jQuery('#categoryImage').attr('src','/assets/img/catalogs/' + data[0]['category_image'])
+                });
+            }else if(type == 'prod'){
+                jQuery('#productId').val(id);
+                getItem(id,type)
+                .then(data => {
+                    let catId = data[0]['categoryId'];
+                    console.log(catId);
+                    jQuery('#productName').val(data[0]['product_name']);
+                    jQuery('#productDescription').val(data[0]['product_description']);
+                    jQuery("#productCategory option[value='" + catId + "']").prop('selected',true);
+                    editor.setData( data[0]['product_description'] );
+                    let active = data[0]['active'];
+                    if (active == 1) {
+                        jQuery('#productActive').prop("checked",true);
+                    } else {
+                        jQuery('#productActive').prop("checked",false);
+                    }
+                    jQuery('#productPrice').val(data[0]['product_price']);
+                    jQuery('#productImageSrc').attr('src','/assets/img/products/' + data[0]['product_image']);
+                });
+            }
+            showForm(id,type,true);
+        }
+
+        const getItem = async (id,type) => {
+            const res = await fetch('/inc/getItem.php',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({id:id,type:type})
+            });
+            const data = await res.json();
+            return data;
+        }
+
+
+    </script>
+
+</body>
+
+</html>
